@@ -26,9 +26,3 @@
     (do (info "starting http-endpoint...")
         (run-server siteconfig {:port port})
         (info (str "|- http-endpoint ready (" port ")")))))
-
-
-
-
-
-
