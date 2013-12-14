@@ -6,26 +6,26 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
 
                  ; Logging
-                 [org.clojure/tools.logging "0.2.3"]
-                 [org.slf4j/slf4j-api "1.6.4"]
-                 [org.slf4j/jcl-over-slf4j "1.6.4"]
-                 [ch.qos.logback/logback-classic "1.0.7"]
+                 [org.clojure/tools.logging "0.2.6"]
+                 [org.slf4j/slf4j-api "1.7.5"]
+                 [org.slf4j/jcl-over-slf4j "1.7.5"]
+                 [ch.qos.logback/logback-classic "1.0.13"]
 
                  ; Web
-                 [ring "1.1.6"]
-                 [http-kit "2.0.0-RC4"]
-                 [compojure "1.1.3"]
-                 [com.cemerick/friend "0.1.3"]
-                 [stencil "0.3.1"]
+                 [ring "1.2.1"]
+                 [http-kit "2.1.13"]
+                 [compojure "1.1.6"]
+                 [com.cemerick/friend "0.2.0"]
+                 [stencil "0.3.2"]
                  
                  ;File System Utilities
-                 [fs "1.3.2"]
+                 [fs "1.3.3"]
 
                  ;Utilities
-                 [cheshire "5.0.0"]
-                 [clj-time "0.4.4"]
+                 [cheshire "5.2.0"]
+                 [clj-time "0.6.0"]
                  [slingshot "0.10.3"]
-                 [org.clojure/data.xml "0.0.6"]
+                 [org.clojure/data.xml "0.0.7"]
                  [org.clojure/data.zip "0.1.1"]
 
                  ]
