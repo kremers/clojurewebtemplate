@@ -1,14 +1,19 @@
 (ns clojurewebtemplate.core
   (:gen-class)
-  (:require (compojure [handler :as handler]))
+  (:require (compojure [handler :as handler]) [clojurewebtemplate.util :as u])
   (:use [compojure core]
         [clojure.tools.logging :only (info debug error)]
         [org.httpkit.server]
         [ring.middleware content-type file file-info params reload]))
 
 (defroutes sync_routes
-  (GET  "/" [] "Hello World!")
-  (ANY  "*" [] {:status 404 :body "sorry, 404"}))
+  (u/wrap-utf8
+   (u/wrap-template
+    (routes
+     (GET  "/" [] (u/erender {} "templates/hello"))
+     (u/routes-by-convention '("/welcome"))
+     (ANY  "*" [] {:status 404 :body "sorry, 404"}))
+    "templates/master")))
 
 (def siteconfig
   (-> sync_routes
@@ -21,6 +26,7 @@
     (do (info "starting http-endpoint...")
         (run-server siteconfig {:port port})
         (info (str "|- http-endpoint ready (" port ")")))))
+
 
 
 
