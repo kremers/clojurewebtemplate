@@ -28,6 +28,7 @@
   (-> sync_routes
       (wrap-file "resources")
       wrap-file-info
+      u/wrap-authflags
       (friend/authenticate {:credential-fn #(creds/bcrypt-credential-fn @users %)
                             :workflows [(workflows/interactive-form)]})
       handler/site))

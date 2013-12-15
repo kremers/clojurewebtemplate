@@ -26,11 +26,12 @@
 (defn wrap-template [handler template]
   (fn [request]
     (if-let [response (handler request)]
-      (do ;(clojure.pprint/pprint request)
-        (update-in response [:body] erender template
-                   (if-let [identity (friend/identity request)]
-                     (merge request {:loggedin true})
-                     request))))))
+      (update-in response [:body] erender template request))))
+
+(defn wrap-authflags [handler]
+  (fn [request]
+    (if-let [identity (friend/identity request)]
+      (handler (merge request {:loggedin true})) (handler request))))
 
 (defn wrap-utf8 [handler]
   (fn [request]
