@@ -49,6 +49,8 @@
              "-dsa"
              "-da"
              ]
+  :plugins [[lein-ancient "0.5.4"]
+            [lein-vanity "0.2.0"]]
   :properties { :project.build.sourceEncoding "UTF-8"}
   :aot [clojurewebtemplate.core]
   :main clojurewebtemplate.core

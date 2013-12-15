@@ -1,16 +1,16 @@
 (ns clojurewebtemplate.core
-  (:gen-class)
-  (:require (compojure [handler :as handler])
-            [clojurewebtemplate.util :as u]
-            [clojurewebtemplate.login :as l]
+  (:require [cemerick.friend :as friend]
+            [cemerick.friend.credentials :as creds]
+            [cemerick.friend.workflows :as workflows]
+            [clojure.tools.logging :refer [info]]
             [clojurewebtemplate.login :as users :refer (users)]
-            [cemerick.friend :as friend]
-            (cemerick.friend [workflows :as workflows]
-                             [credentials :as creds]))
-  (:use [compojure core]
-        [clojure.tools.logging :only (info debug error)]
-        [org.httpkit.server]
-        [ring.middleware content-type file file-info params reload]))
+            [clojurewebtemplate.util :as u]
+            [compojure.core :refer :all]
+            [compojure.handler :as handler]
+            [org.httpkit.server :refer :all]
+            [ring.middleware.file :refer :all]
+            [ring.middleware.file-info :refer :all])
+  (:gen-class))
 
 (defroutes sync_routes
   (u/wrap-utf8

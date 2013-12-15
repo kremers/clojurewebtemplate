@@ -1,6 +1,10 @@
 (ns clojurewebtemplate.util
-  (:require clojure.java.io)
-  (:use [compojure core] [cheshire.core] [stencil.loader :only [unregister-all-templates]] [stencil.core] [ring.util.response]))
+  (:require [cheshire.core :refer :all]
+            [compojure.core :refer :all]
+            [ring.util.response :refer :all]
+            [stencil.core :refer :all]
+            [stencil.loader :refer [unregister-all-templates]])
+  (:gen-class))
 
 (defmacro TGET [route & body]
   "GET with routename corresponding to template name"
