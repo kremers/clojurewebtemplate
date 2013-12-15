@@ -3,6 +3,7 @@
   (:require (compojure [handler :as handler])
             [clojurewebtemplate.util :as u]
             [clojurewebtemplate.login :as l]
+            [clojurewebtemplate.login :as users :refer (users)]
             [cemerick.friend :as friend]
             (cemerick.friend [workflows :as workflows]
                              [credentials :as creds]))
@@ -16,8 +17,8 @@
    (u/wrap-template
     (routes
      (GET  "/" [] (u/erender {} "templates/hello"))
-     (GET  "/secret" [] (friend/authorize #{::admin} (u/erender {} "templates/secret")))
-     (u/routes-by-convention '("/welcome"))
+     (GET  "/secret" [] (friend/authorize #{::users/admin} (u/erender {} "templates/secret")))
+     (u/routes-by-convention '("/welcome" "/login"))
      (friend/logout (ANY "/logout" request (ring.util.response/redirect "/")))
      (ANY  "*" [] {:status 404 :body "sorry, 404"}))
     "templates/master")))
@@ -26,7 +27,7 @@
   (-> sync_routes
       (wrap-file "resources")
       wrap-file-info
-      (friend/authenticate {:credential-fn (partial creds/bcrypt-credential-fn l/users)
+      (friend/authenticate {:credential-fn #(creds/bcrypt-credential-fn @users %)
                             :workflows [(workflows/interactive-form)]})
       handler/site))
 
