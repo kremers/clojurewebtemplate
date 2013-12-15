@@ -16,9 +16,10 @@
   (u/wrap-utf8
    (u/wrap-template
     (routes
-     (GET  "/" [] (u/erender {} "templates/hello"))
-     (GET  "/secret" [] (friend/authorize #{::users/admin} (u/erender {} "templates/secret")))
-     (u/routes-by-convention '("/welcome" "/login"))
+     (GET  "/" [] (u/erender "templates/hello" {}))
+     (GET  "/secret" [] (friend/authorize #{::users/admin} (u/erender "templates/secret" {})))
+     (GET  "/login" request (u/erender "templates/login" request))
+     (u/routes-by-convention '("/welcome"))
      (friend/logout (ANY "/logout" request (ring.util.response/redirect "/")))
      (ANY  "*" [] {:status 404 :body "sorry, 404"}))
     "templates/master")))

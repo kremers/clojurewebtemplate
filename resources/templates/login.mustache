@@ -1,1 +1,5 @@
-<div class="row"><div class="columns small-12"><h3>Login</h3><div class="row"><form action="login" class="columns small-4" method="POST"><div>Username<input name="username" type="text"></div><div>Password<input name="password" type="password"></div><div><input class="button" type="submit" value="Login"></div></form></div></div>
+<div class="row"><div class="columns small-12">
+<h3>{{#params.login_failed}}Login failed, user/password invalid{{/params.login_failed}}{{^params.login_failed}}Login{{/params.login_failed}}</h3>
+
+<div class="row">
+<form action="login" class="columns small-4" method="POST"><div>Username<input name="username" type="text"></div><div>Password<input name="password" type="password"></div><div><input class="button" type="submit" value="Login"></div></form></div></div>

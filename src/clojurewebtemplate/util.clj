@@ -1,5 +1,6 @@
 (ns clojurewebtemplate.util
-  (:require [cheshire.core :refer :all]
+  (:require [cemerick.friend :as friend]
+            [cheshire.core :refer :all]
             [compojure.core :refer :all]
             [ring.util.response :refer :all]
             [stencil.core :refer :all]
@@ -14,16 +15,22 @@
 
 (def development? (= "development" (get (System/getenv) "APP_ENV")))
 
-(defn erender [content template & params]
-  "Render website with template where a {{capsule}}
-   element is required for the rendered body, enhanced by unregistering"
-  (do (if development? (unregister-all-templates))
-      (render-file template (merge (into {} params) {:capsule content}))))
+(defn erender
+  ([content template params]
+     (do (if development? (unregister-all-templates))
+         (render-file template (merge (into {} params) {:capsule content}))))
+  ([template params]
+     (do (if development? (unregister-all-templates))
+         (render-file template params))))
 
 (defn wrap-template [handler template]
   (fn [request]
     (if-let [response (handler request)]
-      (update-in response [:body] erender template request))))
+      (do ;(clojure.pprint/pprint request)
+        (update-in response [:body] erender template
+                   (if-let [identity (friend/identity request)]
+                     (merge request {:loggedin true})
+                     request))))))
 
 (defn wrap-utf8 [handler]
   (fn [request]
