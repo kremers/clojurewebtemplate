@@ -1,5 +1,4 @@
-(ns clojurewebtemplate.login
-  (:require [cemerick.friend.credentials :as creds]))
+(ns clojurewebtemplate.login (:require [cemerick.friend.credentials :as creds]))
 
 ; User map according to friend. Use your favourite datasource to provide
 (def users (atom {"root" {:username "root"
