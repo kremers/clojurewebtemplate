@@ -1,6 +1,6 @@
-clojurewebtemplate
+ofdb - open source food database
 ==================
 
-Template for web applications in clojure
+based on the template for web applications in clojure
 
 Icons from www.glyphicons.com used
