@@ -9,20 +9,27 @@
             [compojure.handler :as handler]
             [org.httpkit.server :refer :all]
             [ring.middleware.file :refer :all]
-            [ring.middleware.file-info :refer :all])
+            [ring.middleware.file-info :refer :all]
+            [ofdb.service :as s]
+            [cheshire.core :as c])
   (:gen-class))
 
 (defroutes sync_routes
   (u/wrap-utf8
-   (u/wrap-template
-    (routes
-     (GET  "/" [] (u/erender "templates/hello" {}))
-     (GET  "/secret" [] (friend/authorize #{::users/admin} (u/erender "templates/secret" {})))
-     (GET  "/login" request (u/erender "templates/login" request))
-     (u/routes-by-convention '("/welcome"))
-     (friend/logout (ANY "/logout" request (ring.util.response/redirect "/")))
-     (ANY  "*" [] {:status 404 :body "sorry, 404"}))
-    "templates/master")))
+   (routes
+    (GET  "/product/:name" [name]
+          (u/jresp
+           (filter #(re-matches (re-pattern (str ".*" name ".*")) (:name %)) (s/getproducts))))
+    (GET  "/products" [] (u/jresp (s/getproducts)))
+    (u/wrap-template
+     (routes
+      (GET  "/" [] (u/erender "templates/hello" {}))
+      (GET  "/secret" [] (friend/authorize #{::users/admin} (u/erender "templates/secret" {})))
+      (GET  "/login" request (u/erender "templates/login" request))
+      (u/routes-by-convention '("/welcome"))
+      (friend/logout (ANY "/logout" request (ring.util.response/redirect "/")))
+      (ANY  "*" [] {:status 404 :body "sorry, 404"}))
+     "templates/master"))))
 
 (def siteconfig
   (-> sync_routes
