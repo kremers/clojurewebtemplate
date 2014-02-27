@@ -1,4 +1,4 @@
-(ns clojurewebtemplate.util
+(ns ofdb.util
   (:require [cemerick.friend :as friend]
             [cheshire.core :refer :all]
             [compojure.core :refer :all]

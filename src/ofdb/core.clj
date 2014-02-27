@@ -1,10 +1,10 @@
-(ns clojurewebtemplate.core
+(ns ofdb.core
   (:require [cemerick.friend :as friend]
             [cemerick.friend.credentials :as creds]
             [cemerick.friend.workflows :as workflows]
             [clojure.tools.logging :refer [info]]
-            [clojurewebtemplate.login :as users :refer (users)]
-            [clojurewebtemplate.util :as u]
+            [ofdb.login :as users :refer (users)]
+            [ofdb.util :as u]
             [compojure.core :refer :all]
             [compojure.handler :as handler]
             [org.httpkit.server :refer :all]

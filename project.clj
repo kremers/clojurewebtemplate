@@ -1,5 +1,5 @@
-(defproject clojurewebtemplate "1.0.0-SNAPSHOT"
-  :description "kickstart a clojure web application"
+(defproject ofdb "1.0.0-SNAPSHOT"
+  :description "open food database"
   :url "http://www.martinkremers.de"
   :license {:name "MIT License"
             :url "http://www.martinkremers.de"}
@@ -51,6 +51,6 @@
   :plugins [[lein-ancient "0.5.4"]
             [lein-vanity "0.2.0"]]
   :properties { :project.build.sourceEncoding "UTF-8"}
-  :aot [clojurewebtemplate.core]
-  :main clojurewebtemplate.core
+  :aot [ofdb.core]
+  :main ofdb.core
 )

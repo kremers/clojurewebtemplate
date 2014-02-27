@@ -1,6 +1,6 @@
-(ns clojurewebtemplate.core-test
+(ns ofdb.core-test
   (:require [clojure.test :refer :all]
-            [clojurewebtemplate.core :refer :all]))
+            [ofdb.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

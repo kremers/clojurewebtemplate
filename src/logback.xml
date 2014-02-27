@@ -8,7 +8,7 @@
     </encoder>
   </appender>
    
-  <logger name="clojurewebtemplate" level="INFO"/>
+  <logger name="ofdb" level="INFO"/>
   <!-- <logger name="com.amazonaws.services.s3.AmazonS3Client" level="ERROR" />-->
   <!--  <logger name="net.spy.memcached" level="DEBUG"/>  
   -->
