@@ -45,7 +45,6 @@
              "-XX:+DoEscapeAnalysis"
              "-server"
              "-Xmx1g"
-             "-d64"
              "-dsa"
              "-da"
              ]
