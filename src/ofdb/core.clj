@@ -23,7 +23,7 @@
     (GET  "/products" [] (u/jresp (s/getproducts)))
     (u/wrap-template
      (routes
-      (GET  "/" [] (u/erender "templates/hello" {}))
+      (GET  "/" [] (u/erender "templates/overview" {}))
       (GET  "/secret" [] (friend/authorize #{::users/admin} (u/erender "templates/secret" {})))
       (GET  "/login" request (u/erender "templates/login" request))
       (u/routes-by-convention '("/welcome"))

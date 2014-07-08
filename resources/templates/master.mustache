@@ -6,6 +6,7 @@
     <title>Open food database</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/modernizr.js"></script>
+    <script src="js/jquery.js"></script>
   </head>
   <body>
 
@@ -31,24 +32,25 @@
         <a href="/welcome">welcome</a>
       </li>
       <li>
-        <a href="/secret">secret</a>
+        <a href="/secret">login</a>
       </li>{{#loggedin}}
       <li>
         <a href="/logout">logout</a>
       </li>{{/loggedin}}
     </ul>
-    </section
+    </section>
   </nav>
 </div>
       	<div class="panel">
-	        <h3>Search and insert food and attached information</h3>
+	        <!--<h3>Search and insert food and attached information</h3>
 	        <p>This page was build with Foundation. It is just an
 	        example how to work with templates, responsive
-	        webdesign and so on.</p>
+	        webdesign and so on.</p>-->
 
                 <p>{{{capsule}}}</p>
 
-                <p>Once you've exhausted the fun in this document, you
+                <hr>
+                <p style="margin-top:10px;">Once you've exhausted the fun in this document, you
                 should check out:
                 (ps. free icons from www.glyphicons.com may be used in
                 the examples)</p>
@@ -66,8 +68,6 @@
       	</div>
       </div>
     </div>
-
-    <script src="js/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
     <script>
       $(document).foundation();

@@ -1,0 +1,47 @@
+<div>
+<h2>Database overview of currently inserted items:</h2>
+
+<table id="database_overview">
+  <thead>
+    <tr> <!--[name calories protein carbs sugar fat waterpercentage additionalinfo] -->
+      <th width="200">Name</th>
+      <th width="200">Calories</th>
+      <th width="150">Protein</th>
+      <th width="150">Carbs</th>
+      <th width="150">Sugar</th>
+      <th width="150">Fat</th>
+      <th width="150">% Water</th>
+      <th width="350">Additional Information</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+$(function() {
+ 
+  print_adi = function(adi) {
+    res = "";
+    $.each(adi, function(k,v) {
+        res+= k+": "+v+"<br/>";
+    });
+    return res;
+  };
+
+  $.get( "/products", function( data ) {
+      $.each(data, function(i,v) {
+        $('#database_overview > tbody:last').append(
+          '<tr><td>'+v.name+'</td>'+
+          '<td>'+v.calories+'</td>'+
+          '<td>'+v.protein+'</td>'+
+          '<td>'+v.carbs+'</td>'+
+          '<td>'+v.sugar+'</td>'+
+          '<td>'+v.fat+'</td>'+
+          '<td>'+v.waterpercentage+'</td>'+
+          '<td>'+print_adi(v.additionalinfo)+'</td></tr>')
+      });
+  }, 'json');
+});
+</script>
+
+</div>
