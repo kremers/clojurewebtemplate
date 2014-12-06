@@ -48,7 +48,7 @@
   ([] @products)
   ([name] (filter #(re-matches (re-pattern (str ".*" name ".*")) (:name %)) (getproducts))))
 
-#_(defn addproduct [http_request])
+(defn addproduct [http_request])
 
 #_(defn add_product [product] (swap! products conj product))
 
