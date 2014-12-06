@@ -15,7 +15,7 @@
                  [ring "1.2.1"]
                  [http-kit "2.1.13"]
                  [compojure "1.1.6"]
-                 [com.cemerick/friend "0.2.0"]
+                 [com.cemerick/friend "0.2.1"]
                  [stencil "0.3.2"]
                  
                  ;File System Utilities
