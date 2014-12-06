@@ -1,25 +1,37 @@
 <div>
 <h2>Database overview of currently inserted items:</h2>
 
+<form id="new_product">
 <table id="database_overview">
   <thead>
     <tr> <!--[name calories protein carbs sugar fat waterpercentage additionalinfo] -->
       <th width="200">Name</th>
       <th width="200">Calories</th>
-      <th width="150">Protein</th>
-      <th width="150">Carbs</th>
-      <th width="150">Sugar</th>
-      <th width="150">Fat</th>
+      <th width="150">Protein / 100g</th>
+      <th width="150">Carbs / 100g</th>
+      <th width="150">Sugar / 100g</th>
+      <th width="150">Fat / 100g</th>
       <th width="150">% Water</th>
       <th width="350">Additional Information</th>
     </tr>
   </thead>
-  <tbody></tbody>
+  <tbody>
+    <tr>
+      <td><input type="text" name="name" id="name" required minlength="3" maxlength="25"/></td>
+      <td></td>
+      <td><input type="number" name="protein" id="protein" required minlength="1" value="" /></td>
+      <td><input type="number" name="carbs" id="carbs" required minlength="1" value="" /></td>
+      <td><input type="number" name="sugar" id="sugar" required minlength="1" value="" /></td>
+      <td><input type="number" name="fat" id="fat" required minlength="1" value="" /></td>
+      <td><input type="number" name="waterpercentage" id="waterpercentage" value="" required min="0" max="100" /></td>
+      <td><input type="text" id="additionalinfo" name="additionalinfo" value=""/></td>
+    </tr>
+  </tbody>
 </table>
+</form>
 
 <script>
 $(function() {
- 
   print_adi = function(adi) {
     res = "";
     $.each(adi, function(k,v) {
@@ -41,6 +53,20 @@ $(function() {
           '<td>'+print_adi(v.additionalinfo)+'</td></tr>')
       });
   }, 'json');
+
+  $(document).keypress(function(e) {
+    if(e.which == 13) {
+        var x = $("#new_product").validate({
+          errorElement: "small",
+          debug: true
+        });
+
+        if(x.form()) {
+          alert("yeahp");
+        }
+    }
+  });
+
 });
 </script>
 

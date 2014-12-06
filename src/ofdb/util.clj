@@ -11,6 +11,8 @@
   "GET with routename corresponding to template name"
   `(GET ~route [] (render-file (str "templates" ~route) ~@body)))
 
+(defn json-in [req] (parse-string (slurp (:body req)) true))
+
 (defn routes-by-convention [pages] (apply routes (map #(TGET % {}) pages)))
 
 (def development? (= "development" (get (System/getenv) "APP_ENV")))

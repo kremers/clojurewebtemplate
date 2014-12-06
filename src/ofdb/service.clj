@@ -1,4 +1,6 @@
-(ns ofdb.service)
+(ns ofdb.service
+  (:require [cheshire.core :as c]
+            [ofdb.util :as u]))
 
 (def calories1g  {:fat 9 :carbs 4 :protein 4 :alcohol 7})
 (defn calc-calories [{:keys [protein carbs fat additionalinfo]}]
@@ -48,9 +50,12 @@
   ([] @products)
   ([name] (filter #(re-matches (re-pattern (str ".*" name ".*")) (:name %)) (getproducts))))
 
-(defn addproduct [http_request])
+(defn addproduct [http_request]
+  (do
+    (clojure.pprint/pprint (u/json-in http_request))
+    '()))
 
-#_(defn add_product [product] (swap! products conj product))
+(defn add_product [product] (swap! products conj product))
 
 #_(defn save-new
   "Creates and inserts a new entity in a specified collection. Parameters get checked against map keys"
