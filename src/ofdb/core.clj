@@ -17,10 +17,9 @@
 (defroutes sync_routes
   (u/wrap-utf8
    (routes
-    (GET  "/product/:name" [name]
-          (u/jresp
-           (filter #(re-matches (re-pattern (str ".*" name ".*")) (:name %)) (s/getproducts))))
+    (GET  "/product/:name" [name] (u/jresp (s/getproducts name)))
     (GET  "/products" [] (u/jresp (s/getproducts)))
+    (POST "/products/add" request (u/jresp (s/addproduct request)))
     (u/wrap-template
      (routes
       (GET  "/" [] (u/erender "templates/overview" {}))
