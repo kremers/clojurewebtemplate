@@ -27,7 +27,8 @@
                  [slingshot "0.10.3"]
                  [org.clojure/data.xml "0.0.7"]
                  [org.clojure/data.zip "0.1.1"]
-
+                 [com.novemberain/validateur "2.3.1"]
+                 
                  ]
 
   :jvm-opts ["-Djava.awt.headless=true"

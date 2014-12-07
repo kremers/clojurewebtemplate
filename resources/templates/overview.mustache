@@ -33,6 +33,7 @@
 <script>
 $(function() {
   print_adi = function(adi) {
+    if(adi===null) return "";
     res = "";
     $.each(adi, function(k,v) {
         res+= k+": "+v+"<br/>";
@@ -40,10 +41,12 @@ $(function() {
     return res;
   };
 
-  $.get( "/products", function( data ) {
+  function readProducts() {
+    $.get( "/products", function( data ) {
+      $('#database_overview > tbody .entry').remove();
       $.each(data, function(i,v) {
         $('#database_overview > tbody:last').append(
-          '<tr><td>'+v.name+'</td>'+
+          '<tr class="entry"><td>'+v.name+'</td>'+
           '<td>'+v.calories+'</td>'+
           '<td>'+v.protein+'</td>'+
           '<td>'+v.carbs+'</td>'+
@@ -52,7 +55,9 @@ $(function() {
           '<td>'+v.waterpercentage+'</td>'+
           '<td>'+print_adi(v.additionalinfo)+'</td></tr>')
       });
-  }, 'json');
+  }, 'json')};
+
+  readProducts();
 
   $(document).keypress(function(e) {
     if(e.which == 13) {
@@ -62,11 +67,30 @@ $(function() {
         });
 
         if(x.form()) {
-          alert("yeahp");
+          var map = {};
+          $.each($("#new_product :input"),function() {
+            if($(this).val() && $(this).val().length) {
+              if($.isNumeric($(this).val())) {
+                map[this.name] = parseFloat($(this).val());
+              } else { 
+                map[this.name] = $(this).val();
+              }
+            }
+          });
+
+          var form = JSON.stringify(map, null, 2);
+
+          $.ajax({ type: 'POST',
+                   contentType: 'application/json',
+                   dataType: 'json',
+                   url: 'products/add',
+                   data: form,
+                   success: function(data)
+                   { alert(data); readProducts(); },
+                   processData: false, dataType: 'json'});
         }
     }
   });
-
 });
 </script>
 

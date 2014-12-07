@@ -1,18 +1,28 @@
 (ns ofdb.service
   (:require [cheshire.core :as c]
-            [ofdb.util :as u]))
+            [ofdb.util :as u]
+            [validateur.validation :as v]))
 
 (def calories1g  {:fat 9 :carbs 4 :protein 4 :alcohol 7})
-(defn calc-calories [{:keys [protein carbs fat additionalinfo]}]
+(defn #^Number calc-calories [{:keys [#^Number protein #^Number carbs #^Number fat additionalinfo]}]
   (format "%.0f"
-     (+ (* (:fat calories1g) fat)
-        (* (:protein calories1g) protein)
-        (* (:carbs calories1g) carbs)
-        (* (:alcohol calories1g) (or (:alcohol additionalinfo) 0)))))
+     (+ (* (:fat calories1g) (or fat 0.0))
+        (* (:protein calories1g) (or protein 0.0))
+        (* (:carbs calories1g) (or carbs 0.0))
+        (* (:alcohol calories1g) (or (:alcohol additionalinfo) 0.0)))))
 
 ;; persisted to a bunch of json files based on 100g
 (defrecord product [name calories protein carbs sugar fat waterpercentage additionalinfo])
 (defn _product [params] (map->product (merge params {:calories (calc-calories params)})))
+(defn invalid-product? [p]
+  (let [vs (apply v/validation-set
+            (v/presence-of :name :calories :protein :carbs :sugar :fat :waterpercentage)
+            (v/validate-by :additionalinfo #(or (nil? %) (map? %)))
+            (map #(v/numericality-of % :gte 0 :lte 100)
+                 '(:protein :carbs :sugar :fat :waterpercentage)) 
+            )
+        result (vs p)]
+    (if (empty? result) false result)))
 
 (def wine
   (_product
@@ -50,15 +60,9 @@
   ([] @products)
   ([name] (filter #(re-matches (re-pattern (str ".*" name ".*")) (:name %)) (getproducts))))
 
-(defn addproduct [http_request]
-  (do
-    (clojure.pprint/pprint (u/json-in http_request))
-    '()))
-
-(defn add_product [product] (swap! products conj product))
-
-#_(defn save-new
-  "Creates and inserts a new entity in a specified collection. Parameters get checked against map keys"
-  [req #^String collection keymap]
-  (json-embed (let [data (json-in req)] (insert collection (merge-by data keymap)))))
+(defn- add_product [product] (swap! products conj product))
+(defn addproduct [http_request] (let [product (_product (u/json-in http_request))]
+                                  (if-let [errors (invalid-product? product)]
+                                    (do (clojure.pprint/pprint errors) errors)
+                                    (add_product product))))
 

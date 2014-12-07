@@ -11,7 +11,9 @@
   "GET with routename corresponding to template name"
   `(GET ~route [] (render-file (str "templates" ~route) ~@body)))
 
-(defn json-in [req] (parse-string (slurp (:body req)) true))
+(defn json-in [req]
+  (with-open [rdr (clojure.java.io/reader (:body req))]
+                      (parse-stream rdr true)))
 
 (defn routes-by-convention [pages] (apply routes (map #(TGET % {}) pages)))
 
