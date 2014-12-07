@@ -86,7 +86,10 @@ $(function() {
                    url: 'products/add',
                    data: form,
                    success: function(data)
-                   { alert(data); readProducts(); },
+                   {
+                     if("success" == data) readProducts();
+                     else alert(JSON.stringify(data,null,2));
+                   },
                    processData: false, dataType: 'json'});
         }
     }

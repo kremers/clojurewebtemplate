@@ -19,8 +19,7 @@
             (v/presence-of :name :calories :protein :carbs :sugar :fat :waterpercentage)
             (v/validate-by :additionalinfo #(or (nil? %) (map? %)))
             (map #(v/numericality-of % :gte 0 :lte 100)
-                 '(:protein :carbs :sugar :fat :waterpercentage)) 
-            )
+                 '(:protein :carbs :sugar :fat :waterpercentage)))
         result (vs p)]
     (if (empty? result) false result)))
 
@@ -64,5 +63,5 @@
 (defn addproduct [http_request] (let [product (_product (u/json-in http_request))]
                                   (if-let [errors (invalid-product? product)]
                                     (do (clojure.pprint/pprint errors) errors)
-                                    (add_product product))))
+                                    (do (add_product product) "success"))))
 
